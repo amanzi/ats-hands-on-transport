@@ -24,16 +24,38 @@ output:
 
 <br>
 
---
-- Understand the basics of .content-box-purple[`transport PK`]
-
---
+- Understand the basics of the .content-box-purple[`transport PK`]
 - Build simple to advanced transport models with .content-box-yellow[`Amanzi-ATS`]
-
---
-- .content-box-red[Visualize and analyze] ATS model outputs
+- .content-box-red[Visualize and analyze] `Amanzi-ATS` model outputs
 
 ---
+
+# Website
+
+<br>
+
+**Github `r fontawesome::fa("github")`:**
+
+[`https://github.com/amanzi/ats-hands-on-transport`](https://github.com/amanzi/ats-hands-on-transport)
+
+<br>
+
+**Slides for tutorial:**
+
+[`https://amanzi.github.io/ats-hands-on-transport/slides.html`](https://amanzi.github.io/ats-hands-on-transport/slides.html)
+
+<br>
+
+.font70[
+**Other `Amanzi-ATS` resources:**
+- Documentation: [`https://amanzi.github.io/ats/stable/`](https://amanzi.github.io/ats/stable/)
+- Short course: [`https://github.com/amanzi/ats-short-course`](https://github.com/amanzi/ats-short-course)
+- Regression tests: [`https://github.com/amanzi/ats-regression-tests`](https://github.com/amanzi/ats-regression-tests)
+- Demos: [`https://github.com/amanzi/ats-demos`](https://github.com/amanzi/ats-demos)
+]
+
+---
+
 # Setting up environment 
 
 <br>
@@ -49,8 +71,21 @@ docker pull --platform linux/amd64 metsi/ideas-watersheds-all-hands-2024:v0
 - Run the `docker` container to start the `JupyterLab` server
 
 ```{bash, eval=FALSE}
-docker run --rm -it -p 8888:8888 metsi/ideas-watersheds-all-hands-2024:v0
+docker run -p 8888:8888 metsi/ideas-watersheds-all-hands-2024:v0
 ```
+
+---
+# VSCode and Dev Containers
+
+<br>
+
+### If you prefer VSCode/Cursor editors, use the extensions:
+- .content-box-green[`Dev Containers`] to connect to the container and edit files (e.g., `XML`). 
+  - .font90[Convenient for data transfer between `host` and `container`]
+  
+  <br>
+
+- .content-box-purple[`jupyter`] to edit/run notebooks inside the container with VSCode.
 
 ---
 class: phong-dark
@@ -91,6 +126,87 @@ $$ \frac{\partial \Theta_g}{\partial t} + \nabla \cdot \vec{\mathbf{q}_g} = Q_g$
 ]
 
 .footnote[```Molins et al. (2022)```]
+
+---
+# Steps to Construct a Model
+.pull-left-21[
+.font90[
+- **.brand-blue[Simulation domains]** `r fontawesome::fa("map")`
+  - Where the processes happen
+
+- **.brand-blue[Dependency graph]** `r fontawesome::fa("network-wired")`
+  - Which `PKs` to use and how they are coupled
+
+
+- **.brand-blue[Model parameters]** `r fontawesome::fa("cog")`
+  - Physical and numerical properties
+
+- **.brand-blue[Initial and boundary conditions]** `r fontawesome::fa("object-ungroup")` `r fontawesome::fa("clock")`
+  - State of the system at $t=0$
+  - How system behaves at the boundaries at $t>0$
+
+- **.brand-blue[Forcing, sources and sinks]** `r fontawesome::fa("cloud-sun-rain")`
+  - External forces that drive changes in the system
+  - Material or energy added/removed to/from the system
+]]
+
+--
+
+<br>
+
+.pull-right-12[
+.small[
+```xml
+<ParameterList name="cycle driver">
+  <Parameter name="end cycle" type="int" value="10000" />
+  <Parameter name="start time" type="double" value=" 0" />
+  <Parameter name="start time units" type="string" value="s" />
+  <Parameter name="end time" type="double" value="86400" />
+  <Parameter name="end time units" type="string" value="s" />
+  <ParameterList name="PK tree">
+    <ParameterList name="flow coupler">
+      <Parameter name="PK type" type="string" value="coupled water" />
+      <ParameterList name="flow">
+        <Parameter name="PK type" type="string" value="richards flow" />
+      </ParameterList>
+      <ParameterList name="overland flow">
+        <Parameter name="PK type" type="string" value="overland flow, pressure basis" />
+      </ParameterList>
+    </ParameterList>
+  </ParameterList>
+</ParameterList>
+```
+]]
+
+---
+
+# Dependency Graph - Integrated Hydrology
+
+.pull-left-21[
+<iframe src="imgs/dependency.html" width="700" height="600" frameborder="0"></iframe>
+]
+
+--
+
+.pull-right-12[
+<br> <br>
+
+.font70[
+```xml
+<ParameterList name="PK tree">
+  <ParameterList name="flow coupler">
+    <Parameter name="PK type" type="string" value="coupled water" />
+    <ParameterList name="flow">
+      <Parameter name="PK type" type="string" value="richards flow" />
+    </ParameterList>
+    <ParameterList name="overland flow">
+      <Parameter name="PK type" type="string" value="overland flow, pressure basis" />
+    </ParameterList>
+  </ParameterList>
+</ParameterList>
+```
+]]
+
 ---
 
 # Domain of simulation
@@ -132,33 +248,15 @@ $\Delta$z = [0.1, 0.1, 0.1, 0.2, 0.2, 0.4, 0.4]
 .font60[.footnote[<a href="imgs/domain.html" target="_blank">```domain of simulation```</a>]]
 
 ---
-
-# Dependency Graph - Integrated Hydrology
-
+# Simulation Time
 .pull-left-21[
-<iframe src="imgs/dependency.html" width="800" height="600" frameborder="0"></iframe>
+- 24 hours
 ]
 
---
+---
+class: phong-dark
+# .brand-orange[Transport hands-on]
 
-.pull-right-12[
-<br> <br>
-
-.font70[
-```xml
-<ParameterList name="PK tree">
-  <ParameterList name="flow coupler">
-    <Parameter name="PK type" type="string" value="coupled water" />
-    <ParameterList name="flow">
-      <Parameter name="PK type" type="string" value="richards flow" />
-    </ParameterList>
-    <ParameterList name="overland flow">
-      <Parameter name="PK type" type="string" value="overland flow, pressure basis" />
-    </ParameterList>
-  </ParameterList>
-</ParameterList>
-```
-]]
 ---
 
 # Transport

@@ -8,8 +8,9 @@ This tutorial offers a hands-on experience in setting up and running transport s
 
 ### 1. Learning Objectives :dart:
 By the end of this workshop, participants will be able to:
-* Understand key concepts of the [transport process kernel (PK)](https://github.com/amanzi/ats/tree/master/src/pk_transport) in Amanzi-ATS;
-* Develop workflows that couple transport PK with [hydrology PK](https://amanzi.github.io/ats/stable/input_spec/process_kernels/physical/flow.html).
+* Understand the basics of the [transport process kernel (PK)](https://github.com/amanzi/ats/tree/master/src/pk_transport) in Amanzi-ATS;
+* Develop workflows that couple transport PK with [hydrology PK](https://amanzi.github.io/ats/stable/input_spec/process_kernels/physical/flow.html);
+* Visualize and analyze Amanzi-ATS model outputs.
 
 ---
 
@@ -20,9 +21,9 @@ To get the most out of this tutorial, participants should have:
 
 ---
 ### 3. Setup Instructions :wrench:
-The slides for the tutorial can be found [here](./slides/slides.html).
+The slides for the tutorial can be found [here](https://amanzi.github.io/ats-hands-on-transport/slides.html).
 
-The tutorial will be conducted in a `docker` container. The container includes the `terminal`, `text editor`, `ats`, `python`, `jupyter notebook`, and other dependencies. The `text editor` is customized to better work with the `ats` input files in `xml` format. Follow the steps below to set up the environment.
+The tutorial will be run in a `docker` container. The container includes the `terminal`, `text editor`, `ats`, `python`, `jupyter notebook`, and other dependencies. The `text editor` is customized to better work with the `ats` input files in `xml` format. Follow the steps below to set up the environment.
 1. **Pull the `docker` image:**
 Make sure to pull the Docker container for this tutorial:
 ```bash
