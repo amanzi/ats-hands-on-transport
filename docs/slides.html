@@ -113,13 +113,19 @@ docker run -p 8888:8888 metsi/ideas-watersheds-all-hands-2024:latest
 
 ---
 # Outlines
+
 &lt;br&gt;
 
-.large[
-- Integrated hydrology model (2D &amp; 3D)
-- Transport model over the entire domain (2D &amp; 3D) 
-- Transport model over the river network (1D)
-]
+#### .blockquote[Integrated hydrology:]
+- Understand and run the model (2-D &amp; 3-D)
+- Visualize and interpret the outputs
+
+#### .blockquote[Transport Modeling:]
+- **Catchment scale:** 2-D &amp; 3-D transport across the entire domain
+- **River network scale:** 1-D transport within the river corridor
+  - .content-box-green[Develop and couple] transport models with integrated hydrology
+  - Visualize and interpret results
+
 
 ---
 class: phong-dark
@@ -163,21 +169,21 @@ $$ \frac{\partial \Theta_g}{\partial t} + \nabla \cdot \vec{\mathbf{q}_g} = Q_g$
 
 ---
 # Steps to Construct a Model
-.pull-left-21[
+.pull-left-64[
 .font90[
 - **.brand-blue[Simulation domains]** <svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M565.6 36.2C572.1 40.7 576 48.1 576 56V392c0 10-6.2 18.9-15.5 22.4l-168 64c-5.2 2-10.9 2.1-16.1 .3L192.5 417.5l-160 61c-7.4 2.8-15.7 1.8-22.2-2.7S0 463.9 0 456V120c0-10 6.1-18.9 15.5-22.4l168-64c5.2-2 10.9-2.1 16.1-.3L383.5 94.5l160-61c7.4-2.8 15.7-1.8 22.2 2.7zM48 136.5V421.2l120-45.7V90.8L48 136.5zM360 422.7V137.3l-144-48V374.7l144 48zm48-1.5l120-45.7V90.8L408 136.5V421.2z"/></svg>
   - Where the processes happen
 
-- **.brand-blue[Dependency graph]** <svg aria-hidden="true" role="img" viewBox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M256 64H384v64H256V64zM240 0c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h48v32H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96v32H80c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48H240c26.5 0 48-21.5 48-48V368c0-26.5-21.5-48-48-48H192V288H448v32H400c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48H560c26.5 0 48-21.5 48-48V368c0-26.5-21.5-48-48-48H512V288h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H352V192h48c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48H240zM96 448V384H224v64H96zm320-64H544v64H416V384z"/></svg>
+- .content-box-green[**.brand-blue[Dependency graph]** <svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M208 80c0-26.5 21.5-48 48-48h64c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48h-8v40H464c30.9 0 56 25.1 56 56v32h8c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48H464c-26.5 0-48-21.5-48-48V368c0-26.5 21.5-48 48-48h8V288c0-4.4-3.6-8-8-8H312v40h8c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48H256c-26.5 0-48-21.5-48-48V368c0-26.5 21.5-48 48-48h8V280H112c-4.4 0-8 3.6-8 8v32h8c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V368c0-26.5 21.5-48 48-48h8V288c0-30.9 25.1-56 56-56H264V192h-8c-26.5 0-48-21.5-48-48V80z"/></svg>]
   - Which `PKs` to use and how they are coupled
 
 
-- **.brand-blue[Model parameters]** <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"/></svg>
+- **.brand-blue[Model parameters]** <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"/></svg>
   - Physical and numerical properties
 
 - **.brand-blue[Initial and boundary conditions]** <svg aria-hidden="true" role="img" viewBox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M48.2 66.8c-.1-.8-.2-1.7-.2-2.5c0-.1 0-.1 0-.2c0-8.8 7.2-16 16-16c.9 0 1.9 .1 2.8 .2C74.3 49.5 80 56.1 80 64c0 8.8-7.2 16-16 16c-7.9 0-14.5-5.7-15.8-13.2zM0 64c0 26.9 16.5 49.9 40 59.3V228.7C16.5 238.1 0 261.1 0 288c0 35.3 28.7 64 64 64c26.9 0 49.9-16.5 59.3-40H324.7c9.5 23.5 32.5 40 59.3 40c35.3 0 64-28.7 64-64c0-26.9-16.5-49.9-40-59.3V123.3c23.5-9.5 40-32.5 40-59.3c0-35.3-28.7-64-64-64c-26.9 0-49.9 16.5-59.3 40H123.3C113.9 16.5 90.9 0 64 0C28.7 0 0 28.7 0 64zm368 0a16 16 0 1 1 32 0 16 16 0 1 1 -32 0zM324.7 88c6.5 16 19.3 28.9 35.3 35.3V228.7c-16 6.5-28.9 19.3-35.3 35.3H123.3c-6.5-16-19.3-28.9-35.3-35.3V123.3c16-6.5 28.9-19.3 35.3-35.3H324.7zM384 272a16 16 0 1 1 0 32 16 16 0 1 1 0-32zM80 288c0 7.9-5.7 14.5-13.2 15.8c-.8 .1-1.7 .2-2.5 .2l-.2 0c-8.8 0-16-7.2-16-16c0-.9 .1-1.9 .2-2.8C49.5 277.7 56.1 272 64 272c8.8 0 16 7.2 16 16zm391.3-40h45.4c6.5 16 19.3 28.9 35.3 35.3V388.7c-16 6.5-28.9 19.3-35.3 35.3H315.3c-6.5-16-19.3-28.9-35.3-35.3V352H232v36.7c-23.5 9.5-40 32.5-40 59.3c0 35.3 28.7 64 64 64c26.9 0 49.9-16.5 59.3-40H516.7c9.5 23.5 32.5 40 59.3 40c35.3 0 64-28.7 64-64c0-26.9-16.5-49.9-40-59.3V283.3c23.5-9.5 40-32.5 40-59.3c0-35.3-28.7-64-64-64c-26.9 0-49.9 16.5-59.3 40H448v16.4c9.8 8.8 17.8 19.5 23.3 31.6zm88.9-26.7a16 16 0 1 1 31.5 5.5 16 16 0 1 1 -31.5-5.5zM271.8 450.7a16 16 0 1 1 -31.5-5.5 16 16 0 1 1 31.5 5.5zm301.5 13c-7.5-1.3-13.2-7.9-13.2-15.8c0-8.8 7.2-16 16-16c7.9 0 14.5 5.7 15.8 13.2l0 .1c.1 .9 .2 1.8 .2 2.7c0 8.8-7.2 16-16 16c-.9 0-1.9-.1-2.8-.2z"/></svg> <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/></svg>
-  - State of the system at `\(t=0\)`
-  - How system behaves at the boundaries at `\(t&gt;0\)`
+  - State of the system at `\(t=t_0\)`
+  - How system behaves at the boundaries at `\(t \ge t_0\)`
 
 - **.brand-blue[Forcing, sources and sinks]** <svg aria-hidden="true" role="img" viewBox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M294.2 1.2c5.1 2.1 8.7 6.7 9.6 12.1l10.4 62.4c-23.3 10.8-42.9 28.4-56 50.3c-14.6-9-31.8-14.1-50.2-14.1c-53 0-96 43-96 96c0 35.5 19.3 66.6 48 83.2c.8 31.8 13.2 60.7 33.1 82.7l-56 39.2c-4.5 3.1-10.3 3.8-15.4 1.6s-8.7-6.7-9.6-12.1L98.1 317.9 13.4 303.8c-5.4-.9-10-4.5-12.1-9.6s-1.5-10.9 1.6-15.4L52.5 208 2.9 137.2c-3.2-4.5-3.8-10.3-1.6-15.4s6.7-8.7 12.1-9.6L98.1 98.1l14.1-84.7c.9-5.4 4.5-10 9.6-12.1s10.9-1.5 15.4 1.6L208 52.5 278.8 2.9c4.5-3.2 10.3-3.8 15.4-1.6zM208 144c13.8 0 26.7 4.4 37.1 11.9c-1.2 4.1-2.2 8.3-3 12.6c-37.9 14.6-67.2 46.6-77.8 86.4C151.8 243.1 144 226.5 144 208c0-35.3 28.7-64 64-64zm69.4 276c11 7.4 14 22.3 6.7 33.3l-32 48c-7.4 11-22.3 14-33.3 6.7s-14-22.3-6.7-33.3l32-48c7.4-11 22.3-14 33.3-6.7zm96 0c11 7.4 14 22.3 6.7 33.3l-32 48c-7.4 11-22.3 14-33.3 6.7s-14-22.3-6.7-33.3l32-48c7.4-11 22.3-14 33.3-6.7zm96 0c11 7.4 14 22.3 6.7 33.3l-32 48c-7.4 11-22.3 14-33.3 6.7s-14-22.3-6.7-33.3l32-48c7.4-11 22.3-14 33.3-6.7zm96 0c11 7.4 14 22.3 6.7 33.3l-32 48c-7.4 11-22.3 14-33.3 6.7s-14-22.3-6.7-33.3l32-48c7.4-11 22.3-14 33.3-6.7zm74.5-116.1c0 44.2-35.8 80-80 80H288c-53 0-96-43-96-96c0-47.6 34.6-87 80-94.6l0-1.3c0-53 43-96 96-96c34.9 0 65.4 18.6 82.2 46.4c13-9.1 28.8-14.4 45.8-14.4c44.2 0 80 35.8 80 80c0 5.9-.6 11.7-1.9 17.2c37.4 6.7 65.8 39.4 65.8 78.7z"/></svg>
   - External forces that drive changes in the system
@@ -188,15 +194,46 @@ $$ \frac{\partial \Theta_g}{\partial t} + \nabla \cdot \vec{\mathbf{q}_g} = Q_g$
 
 &lt;br&gt;
 
-.pull-right-12[
+.pull-right-46[
+
 .small[
+**ATS `xml` top level list includes:**
+```r
+Main
+- mesh: ["mesh-typed-spec-list"]
+- regions: ["region-typedinline-spec-list"]
+- cycle driver: ["coordinator-spec"]
+- PKs: ["pk-typedinline-spec-list"]
+- state: ["state-spec"]
+*- visualization: ["visualization-spec-list"]
+*- checkpoint: ["checkpoint-spec"]
+*- observations: ["observation-spec-list"]
+```
+]
+]
+
+.footnote[[ATS Documentation](https://amanzi.github.io/ats/stable/input_spec/main.html)]
+
+---
+
+# Dependency Graph - Integrated Hydrology
+
+.pull-left-64[
+&lt;iframe src="imgs/dependency.html" width="600" height="500" frameborder="1"&gt;&lt;/iframe&gt;
+]
+
+.font70[
+- **PK:** [`Process kernels`](https://amanzi.github.io/ats/stable/input_spec/process_kernels/index.html)
+- **MPC:** [`Multi-process-couplers`](https://amanzi.github.io/ats/stable/input_spec/process_kernels/mpcs/index.html)
+]
+
+--
+
+.pull-right-46[
+.font70[
 ```xml
-&lt;ParameterList name="cycle driver"&gt;
-  &lt;Parameter name="end cycle" type="int" value="10000" /&gt;
-  &lt;Parameter name="start time" type="double" value=" 0" /&gt;
-  &lt;Parameter name="start time units" type="string" value="s" /&gt;
-  &lt;Parameter name="end time" type="double" value="86400" /&gt;
-  &lt;Parameter name="end time units" type="string" value="s" /&gt;
+&lt;ParameterList name="Main"&gt;
+* OTHER LISTS...
   &lt;ParameterList name="PK tree"&gt;
     &lt;ParameterList name="flow coupler"&gt;
       &lt;Parameter name="PK type" type="string" value="coupled water" /&gt;
@@ -208,49 +245,17 @@ $$ \frac{\partial \Theta_g}{\partial t} + \nabla \cdot \vec{\mathbf{q}_g} = Q_g$
       &lt;/ParameterList&gt;
     &lt;/ParameterList&gt;
   &lt;/ParameterList&gt;
-&lt;/ParameterList&gt;
-```
-]]
 
----
+* OTHER LISTS...
 
-# Dependency Graph - Integrated Hydrology
-
-.pull-left-21[
-&lt;iframe src="imgs/dependency.html" width="700" height="600" frameborder="0"&gt;&lt;/iframe&gt;
-]
-
-.font70[
-- **PK:** [`Process kernels`](https://amanzi.github.io/ats/stable/input_spec/process_kernels/index.html)
-- **MPC:** [`Multi-process-couplers`](https://amanzi.github.io/ats/stable/input_spec/process_kernels/mpcs/index.html)
-]
-
---
-
-.pull-right-12[
-.font70[
-```xml
-&lt;ParameterList name="PK tree"&gt;
-  &lt;ParameterList name="flow coupler"&gt;
-    &lt;Parameter name="PK type" type="string" value="coupled water" /&gt;
-    &lt;ParameterList name="flow"&gt;
-      &lt;Parameter name="PK type" type="string" value="richards flow" /&gt;
+  &lt;ParameterList name="PKs"&gt;
+    &lt;ParameterList name="flow coupler"&gt;
+      &lt;Parameter name="PK type" type="string" value="coupled water" /&gt;
+      &lt;Parameter name="PKs order" type="Array(string)" value="{flow, overland flow}" /&gt;
     &lt;/ParameterList&gt;
-    &lt;ParameterList name="overland flow"&gt;
-      &lt;Parameter name="PK type" type="string" value="overland flow, pressure basis" /&gt;
-    &lt;/ParameterList&gt;
+*   OTHER SUB-LISTS...    
   &lt;/ParameterList&gt;
-&lt;/ParameterList&gt;
-
-OTHER CODES...
-
-&lt;ParameterList name="PKs"&gt;
-  &lt;ParameterList name="flow coupler"&gt;
-    &lt;Parameter name="PK type" type="string" value="coupled water" /&gt;
-    &lt;Parameter name="PKs order" type="Array(string)" value="{flow, overland flow}" /&gt;
-  &lt;/ParameterList&gt;
-  OTHER CODES...    
-&lt;/ParameterList&gt;
+&lt;/ParameterList&gt;  
 ```
 ]]
 
@@ -295,10 +300,56 @@ OTHER CODES...
 .font60[.footnote[&lt;a href="imgs/domain.html" target="_blank"&gt;```domain of simulation```&lt;/a&gt;]]
 
 ---
-# Simulation Time
-.pull-left-21[
-- 24 hours
+# Model Parameters
+.small[
+.pull-left-64[
+- Surface
+$$ \frac{\partial \Theta_s}{\partial t} + \nabla \cdot \mathbf{q}_s = Q_s + Q_e$$
+- Subsurface
+$$ \frac{\partial \Theta_g}{\partial t} + \nabla \cdot \mathbf{q}_g = Q_g$$
+]]
+
+--
+.footnotesize[.pull-right-46[
+&lt;br&gt;
+`$$\mathbf{q}_s = -\eta h \frac{h^{4/3}} {n_{mann} \sqrt{|\nabla z|} } \nabla (\eta + z)$$`
+
+&lt;br&gt;
+
+`$$\mathbf{q}_g = -\frac{\eta}{\mu} k_r K (\nabla p +  \rho g\mathbf{z})$$`
+
+.content-box-yellow[
+- `\(n_{mann}\)`: Manning's roughness coefficient
+- `\(k_r\)`: relative permeability
+- `\(K\)`: absolute permeability
+]]
 ]
+
+--
+
+.pull-left[
+.font60[
+```xml
+&lt;ParameterList name="state"&gt;
+  &lt;ParameterList name="evaluators"&gt;
+*   OTHER EVALUATORS ...
+    &lt;ParameterList name="surface-manning_coefficient"&gt;
+      &lt;Parameter name="evaluator type" type="string" value="independent variable constant" /&gt;
+      &lt;Parameter name="value" type="double" value="0.15" /&gt;
+    &lt;/ParameterList&gt;
+    &lt;ParameterList name="permeability"&gt;
+      &lt;Parameter name="evaluator type" type="string" value="independent variable constant" /&gt;
+      &lt;Parameter name="value" type="double" value="5e-13" /&gt;
+    &lt;/ParameterList&gt;
+    &lt;ParameterList name="relative_permeability"&gt;
+      &lt;Parameter name="evaluator type" type="string" value="relative permeability, water retention model" /&gt;
+      &lt;Parameter name="model parameters" type="string" value="WRM parameters" /&gt;
+    &lt;/ParameterList&gt;        
+  &lt;/ParameterList&gt;
+*   OTHER EVALUATORS ...  
+&lt;/ParameterList&gt;  
+```
+]]
 
 ---
 class: phong-dark

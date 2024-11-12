@@ -70,6 +70,14 @@ To specify the margin of the first title h1
   width: 72%;
 }
 
+.pull-left-64 {
+  float: left;
+  width: 56%;
+}
+.pull-right-46 {
+  float: right;
+  width: 36%;
+}
 
 /* use to position text at the bottom */
 .pull-down {

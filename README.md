@@ -53,6 +53,7 @@ git clone https://github.com/amanzi/ats-hands-on-transport.git
 ### 4. Workshop Outline :memo:
 * **Introduction to Hydrology and Transport PKs in ATS:**
    - Overview of governing equations
+   - Review of ATS input files
    
 * **Hands-On Session: Building Transport Simulations:**
    - Step-by-step guidance on developing transport simulations in ATS based on the integrated hydrology model*

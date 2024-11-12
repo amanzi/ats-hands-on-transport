@@ -89,13 +89,19 @@ docker run -p 8888:8888 metsi/ideas-watersheds-all-hands-2024:latest
 
 ---
 # Outlines
+
 <br>
 
-.large[
-- Integrated hydrology model (2D & 3D)
-- Transport model over the entire domain (2D & 3D) 
-- Transport model over the river network (1D)
-]
+#### .blockquote[Integrated hydrology:]
+- Understand and run the model (2-D & 3-D)
+- Visualize and interpret the outputs
+
+#### .blockquote[Transport Modeling:]
+- **Catchment scale:** 2-D & 3-D transport across the entire domain
+- **River network scale:** 1-D transport within the river corridor
+  - .content-box-green[Develop and couple] transport models with integrated hydrology
+  - Visualize and interpret results
+
 
 ---
 class: phong-dark
@@ -139,21 +145,21 @@ $$ \frac{\partial \Theta_g}{\partial t} + \nabla \cdot \vec{\mathbf{q}_g} = Q_g$
 
 ---
 # Steps to Construct a Model
-.pull-left-21[
+.pull-left-64[
 .font90[
 - **.brand-blue[Simulation domains]** `r fontawesome::fa("map")`
   - Where the processes happen
 
-- **.brand-blue[Dependency graph]** `r fontawesome::fa("network-wired")`
+- .content-box-green[**.brand-blue[Dependency graph]** `r fontawesome::fa("sitemap")`]
   - Which `PKs` to use and how they are coupled
 
 
-- **.brand-blue[Model parameters]** `r fontawesome::fa("cog")`
+- **.brand-blue[Model parameters]** `r fontawesome::fa("sliders")`
   - Physical and numerical properties
 
 - **.brand-blue[Initial and boundary conditions]** `r fontawesome::fa("object-ungroup")` `r fontawesome::fa("clock")`
-  - State of the system at $t=0$
-  - How system behaves at the boundaries at $t>0$
+  - State of the system at $t=t_0$
+  - How system behaves at the boundaries at $t \ge t_0$
 
 - **.brand-blue[Forcing, sources and sinks]** `r fontawesome::fa("cloud-sun-rain")`
   - External forces that drive changes in the system
@@ -164,15 +170,46 @@ $$ \frac{\partial \Theta_g}{\partial t} + \nabla \cdot \vec{\mathbf{q}_g} = Q_g$
 
 <br>
 
-.pull-right-12[
+.pull-right-46[
+
 .small[
+**ATS `xml` top level list includes:**
+```r
+Main
+- mesh: ["mesh-typed-spec-list"]
+- regions: ["region-typedinline-spec-list"]
+- cycle driver: ["coordinator-spec"]
+- PKs: ["pk-typedinline-spec-list"]
+- state: ["state-spec"]
+*- visualization: ["visualization-spec-list"]
+*- checkpoint: ["checkpoint-spec"]
+*- observations: ["observation-spec-list"]
+```
+]
+]
+
+.footnote[[ATS Documentation](https://amanzi.github.io/ats/stable/input_spec/main.html)]
+
+---
+
+# Dependency Graph - Integrated Hydrology
+
+.pull-left-64[
+<iframe src="imgs/dependency.html" width="600" height="500" frameborder="1"></iframe>
+]
+
+.font70[
+- **PK:** [`Process kernels`](https://amanzi.github.io/ats/stable/input_spec/process_kernels/index.html)
+- **MPC:** [`Multi-process-couplers`](https://amanzi.github.io/ats/stable/input_spec/process_kernels/mpcs/index.html)
+]
+
+--
+
+.pull-right-46[
+.font70[
 ```xml
-<ParameterList name="cycle driver">
-  <Parameter name="end cycle" type="int" value="10000" />
-  <Parameter name="start time" type="double" value=" 0" />
-  <Parameter name="start time units" type="string" value="s" />
-  <Parameter name="end time" type="double" value="86400" />
-  <Parameter name="end time units" type="string" value="s" />
+<ParameterList name="Main">
+* OTHER LISTS...
   <ParameterList name="PK tree">
     <ParameterList name="flow coupler">
       <Parameter name="PK type" type="string" value="coupled water" />
@@ -184,49 +221,17 @@ $$ \frac{\partial \Theta_g}{\partial t} + \nabla \cdot \vec{\mathbf{q}_g} = Q_g$
       </ParameterList>
     </ParameterList>
   </ParameterList>
-</ParameterList>
-```
-]]
 
----
+* OTHER LISTS...
 
-# Dependency Graph - Integrated Hydrology
-
-.pull-left-21[
-<iframe src="imgs/dependency.html" width="700" height="600" frameborder="0"></iframe>
-]
-
-.font70[
-- **PK:** [`Process kernels`](https://amanzi.github.io/ats/stable/input_spec/process_kernels/index.html)
-- **MPC:** [`Multi-process-couplers`](https://amanzi.github.io/ats/stable/input_spec/process_kernels/mpcs/index.html)
-]
-
---
-
-.pull-right-12[
-.font70[
-```xml
-<ParameterList name="PK tree">
-  <ParameterList name="flow coupler">
-    <Parameter name="PK type" type="string" value="coupled water" />
-    <ParameterList name="flow">
-      <Parameter name="PK type" type="string" value="richards flow" />
+  <ParameterList name="PKs">
+    <ParameterList name="flow coupler">
+      <Parameter name="PK type" type="string" value="coupled water" />
+      <Parameter name="PKs order" type="Array(string)" value="{flow, overland flow}" />
     </ParameterList>
-    <ParameterList name="overland flow">
-      <Parameter name="PK type" type="string" value="overland flow, pressure basis" />
-    </ParameterList>
+*   OTHER SUB-LISTS...    
   </ParameterList>
-</ParameterList>
-
-OTHER CODES...
-
-<ParameterList name="PKs">
-  <ParameterList name="flow coupler">
-    <Parameter name="PK type" type="string" value="coupled water" />
-    <Parameter name="PKs order" type="Array(string)" value="{flow, overland flow}" />
-  </ParameterList>
-  OTHER CODES...    
-</ParameterList>
+</ParameterList>  
 ```
 ]]
 
@@ -271,10 +276,56 @@ $\Delta$z = [0.1, 0.1, 0.1, 0.2, 0.2, 0.4, 0.4]
 .font60[.footnote[<a href="imgs/domain.html" target="_blank">```domain of simulation```</a>]]
 
 ---
-# Simulation Time
-.pull-left-21[
-- 24 hours
+# Model Parameters
+.small[
+.pull-left-64[
+- Surface
+$$ \frac{\partial \Theta_s}{\partial t} + \nabla \cdot \mathbf{q}_s = Q_s + Q_e$$
+- Subsurface
+$$ \frac{\partial \Theta_g}{\partial t} + \nabla \cdot \mathbf{q}_g = Q_g$$
+]]
+
+--
+.footnotesize[.pull-right-46[
+<br>
+$$\mathbf{q}_s = -\eta h \frac{h^{4/3}} {n_{mann} \sqrt{|\nabla z|} } \nabla (\eta + z)$$
+
+<br>
+
+$$\mathbf{q}_g = -\frac{\eta}{\mu} k_r K (\nabla p +  \rho g\mathbf{z})$$
+
+.content-box-yellow[
+- $n_{mann}$: Manning's roughness coefficient
+- $k_r$: relative permeability
+- $K$: absolute permeability
+]]
 ]
+
+--
+
+.pull-left[
+.font60[
+```xml
+<ParameterList name="state">
+  <ParameterList name="evaluators">
+*   OTHER EVALUATORS ...
+    <ParameterList name="surface-manning_coefficient">
+      <Parameter name="evaluator type" type="string" value="independent variable constant" />
+      <Parameter name="value" type="double" value="0.15" />
+    </ParameterList>
+    <ParameterList name="permeability">
+      <Parameter name="evaluator type" type="string" value="independent variable constant" />
+      <Parameter name="value" type="double" value="5e-13" />
+    </ParameterList>
+    <ParameterList name="relative_permeability">
+      <Parameter name="evaluator type" type="string" value="relative permeability, water retention model" />
+      <Parameter name="model parameters" type="string" value="WRM parameters" />
+    </ParameterList>        
+  </ParameterList>
+*   OTHER EVALUATORS ...  
+</ParameterList>  
+```
+]]
 
 ---
 class: phong-dark
