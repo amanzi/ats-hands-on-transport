@@ -27,13 +27,13 @@ The tutorial will be run in a `docker` container. The container includes the `te
 1. **Pull the `docker` image:**
 Make sure to pull the Docker container for this tutorial:
 ```bash
-docker pull --platform linux/amd64 metsi/ideas-watersheds-all-hands-2024:v0
+docker pull --platform linux/amd64 metsi/ideas-watersheds-all-hands-2024:latest
 ```
 
 2. **Run the container:**
 Start the container and open the Jupyter Notebook interface:
 ```bash
-docker run --rm -it -p 8888:8888 metsi/ideas-watersheds-all-hands-2024:v0
+docker run -p 8888:8888 metsi/ideas-watersheds-all-hands-2024:latest
 ```
 
 3. **Access Jupyter notebooks:**

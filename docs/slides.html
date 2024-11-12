@@ -86,7 +86,7 @@ class: center, middle, inverse, title-slide
 
 
 ```bash
-docker pull --platform linux/amd64 metsi/ideas-watersheds-all-hands-2024:v0
+docker pull --platform linux/amd64 metsi/ideas-watersheds-all-hands-2024:latest
 ```
 
 &lt;br&gt;
@@ -95,7 +95,7 @@ docker pull --platform linux/amd64 metsi/ideas-watersheds-all-hands-2024:v0
 
 
 ```bash
-docker run -p 8888:8888 metsi/ideas-watersheds-all-hands-2024:v0
+docker run -p 8888:8888 metsi/ideas-watersheds-all-hands-2024:latest
 ```
 
 ---
@@ -110,6 +110,16 @@ docker run -p 8888:8888 metsi/ideas-watersheds-all-hands-2024:v0
   &lt;br&gt;
 
 - .content-box-purple[`jupyter`] to edit/run notebooks inside the container with VSCode.
+
+---
+# Outlines
+&lt;br&gt;
+
+.large[
+- Integrated hydrology model (2D &amp; 3D)
+- Transport model over the entire domain (2D &amp; 3D) 
+- Transport model over the river network (1D)
+]
 
 ---
 class: phong-dark
@@ -210,11 +220,14 @@ $$ \frac{\partial \Theta_g}{\partial t} + \nabla \cdot \vec{\mathbf{q}_g} = Q_g$
 &lt;iframe src="imgs/dependency.html" width="700" height="600" frameborder="0"&gt;&lt;/iframe&gt;
 ]
 
+.font70[
+- **PK:** [`Process kernels`](https://amanzi.github.io/ats/stable/input_spec/process_kernels/index.html)
+- **MPC:** [`Multi-process-couplers`](https://amanzi.github.io/ats/stable/input_spec/process_kernels/mpcs/index.html)
+]
+
 --
 
 .pull-right-12[
-&lt;br&gt; &lt;br&gt;
-
 .font70[
 ```xml
 &lt;ParameterList name="PK tree"&gt;
@@ -227,6 +240,16 @@ $$ \frac{\partial \Theta_g}{\partial t} + \nabla \cdot \vec{\mathbf{q}_g} = Q_g$
       &lt;Parameter name="PK type" type="string" value="overland flow, pressure basis" /&gt;
     &lt;/ParameterList&gt;
   &lt;/ParameterList&gt;
+&lt;/ParameterList&gt;
+
+OTHER CODES...
+
+&lt;ParameterList name="PKs"&gt;
+  &lt;ParameterList name="flow coupler"&gt;
+    &lt;Parameter name="PK type" type="string" value="coupled water" /&gt;
+    &lt;Parameter name="PKs order" type="Array(string)" value="{flow, overland flow}" /&gt;
+  &lt;/ParameterList&gt;
+  OTHER CODES...    
 &lt;/ParameterList&gt;
 ```
 ]]

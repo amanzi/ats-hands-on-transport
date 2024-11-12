@@ -63,7 +63,7 @@ output:
 - Pull the `docker` `r fontawesome::fa("docker")` image
 
 ```{bash, eval=FALSE}
-docker pull --platform linux/amd64 metsi/ideas-watersheds-all-hands-2024:v0
+docker pull --platform linux/amd64 metsi/ideas-watersheds-all-hands-2024:latest
 ```
 
 <br>
@@ -71,7 +71,7 @@ docker pull --platform linux/amd64 metsi/ideas-watersheds-all-hands-2024:v0
 - Run the `docker` container to start the `JupyterLab` server
 
 ```{bash, eval=FALSE}
-docker run -p 8888:8888 metsi/ideas-watersheds-all-hands-2024:v0
+docker run -p 8888:8888 metsi/ideas-watersheds-all-hands-2024:latest
 ```
 
 ---
@@ -86,6 +86,16 @@ docker run -p 8888:8888 metsi/ideas-watersheds-all-hands-2024:v0
   <br>
 
 - .content-box-purple[`jupyter`] to edit/run notebooks inside the container with VSCode.
+
+---
+# Outlines
+<br>
+
+.large[
+- Integrated hydrology model (2D & 3D)
+- Transport model over the entire domain (2D & 3D) 
+- Transport model over the river network (1D)
+]
 
 ---
 class: phong-dark
@@ -186,11 +196,14 @@ $$ \frac{\partial \Theta_g}{\partial t} + \nabla \cdot \vec{\mathbf{q}_g} = Q_g$
 <iframe src="imgs/dependency.html" width="700" height="600" frameborder="0"></iframe>
 ]
 
+.font70[
+- **PK:** [`Process kernels`](https://amanzi.github.io/ats/stable/input_spec/process_kernels/index.html)
+- **MPC:** [`Multi-process-couplers`](https://amanzi.github.io/ats/stable/input_spec/process_kernels/mpcs/index.html)
+]
+
 --
 
 .pull-right-12[
-<br> <br>
-
 .font70[
 ```xml
 <ParameterList name="PK tree">
@@ -203,6 +216,16 @@ $$ \frac{\partial \Theta_g}{\partial t} + \nabla \cdot \vec{\mathbf{q}_g} = Q_g$
       <Parameter name="PK type" type="string" value="overland flow, pressure basis" />
     </ParameterList>
   </ParameterList>
+</ParameterList>
+
+OTHER CODES...
+
+<ParameterList name="PKs">
+  <ParameterList name="flow coupler">
+    <Parameter name="PK type" type="string" value="coupled water" />
+    <Parameter name="PKs order" type="Array(string)" value="{flow, overland flow}" />
+  </ParameterList>
+  OTHER CODES...    
 </ParameterList>
 ```
 ]]
