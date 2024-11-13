@@ -244,7 +244,7 @@ $\Delta$z = [0.1, 0.1, 0.1, 0.2, 0.2, 0.4, 0.4]
 # Dependency Graph - Integrated Hydrology
 
 .pull-left-64[
-<iframe src="imgs/dependency.html" width="600" height="500" frameborder="0"></iframe>
+<iframe src="imgs/dependency_hydro.html" width="600" height="500" frameborder="0"></iframe>
 ]
 
 .font70[
@@ -491,7 +491,6 @@ $$
 ---
 
 # Dependency Graph - Transport
-
 Let's construct the **dependency graph** (or `PK tree`) for the integrated transport model.
 
 <iframe src="imgs/dependency.html" width="1200" height="600" frameborder="0"></iframe>
