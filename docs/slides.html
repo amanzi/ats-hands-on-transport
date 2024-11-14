@@ -391,7 +391,7 @@ $$ \frac{\partial \eta S_w \phi}{\partial t} + \nabla \cdot \mathbf{q}_g = Q_g$$
           &lt;Parameter name="component" type="string" value="cell" /&gt;
 *         &lt;ParameterList name="function"&gt;
 *           &lt;ParameterList name="function-tabular"&gt;
-*             &lt;Parameter name="x values" type="Array(double)" value="{0, 86400}" /&gt;
+*             &lt;Parameter name="x values" type="Array(double)" value="{0, 57600}" /&gt;
 *             &lt;Parameter name="y values" type="Array(double)" value="{5e-06, 0}" /&gt;
 *             &lt;Parameter name="forms" type="Array(string)" value="{constant}" /&gt;
 *           &lt;/ParameterList&gt;
@@ -410,8 +410,9 @@ $$ \frac{\partial \eta S_w \phi}{\partial t} + \nabla \cdot \mathbf{q}_g = Q_g$$
 #### .blockquote[Initial conditions .gray[(true)]]
 .small[
 - located inside each PK in the `xml` file
-- created from functions
-- loaded from files (e.g. checkpoints)
+- can be:
+  - created from functions
+  - loaded from files (e.g. checkpoints)
 ]
 
 #### .blockquote[Boundary conditions]
@@ -450,7 +451,7 @@ $$ \frac{\partial \eta S_w \phi}{\partial t} + \nabla \cdot \mathbf{q}_g = Q_g$$
 ]]
 
 
-.footnote[See the documentation for details about ICs and BCs: [`https://amanzi.github.io/ats/stable/input_spec/common.html`](https://amanzi.github.io/ats/stable/input_spec/common.html)]
+.footnote[`See the documentation for details about ICs and BCs:` [`https://amanzi.github.io/ats/stable/input_spec/common.html`](https://amanzi.github.io/ats/stable/input_spec/common.html)]
 
 
 ---
@@ -499,6 +500,12 @@ Let's construct the **dependency graph** (or `PK tree`) for the integrated trans
 
 &lt;iframe src="imgs/dependency.html" width="1200" height="600" frameborder="0"&gt;&lt;/iframe&gt;
 
+
+.footnote[
+  &lt;a href="imgs/dependency_transport.html" target="_blank"&gt;```graph: transport```&lt;/a&gt; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;
+  &lt;a href="imgs/dependency_transport_reactive.html" target="_blank"&gt;```graph: reactive transport```&lt;/a&gt; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;
+  &lt;a href="imgs/dependency_transport_reactive_ecohydrology.html" target="_blank"&gt;```graph: reactive transport &amp; ecohydrology```&lt;/a&gt;
+]
 ---
 
 # Transport Model Parameters

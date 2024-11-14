@@ -406,7 +406,7 @@
         </ParameterList>
         <!-- 
         ############################################################
-        ADD OBSERVATION FOR TRANSPORT
+        ADD OBSERVATION FOR TRANSPORT at the outlet (cell-based)
         ############################################################
           <ParameterList name="DOMAIN-total_component_concentration-outlet">
             <Parameter name="variable" type="string" value="DOMAIN-total_component_concentration" />

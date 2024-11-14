@@ -41,7 +41,7 @@
     </ParameterList>
     <!-- 
     ############################################################
-    ADD NEW SUB-DOMAIN HERE 
+    ADD NEW SUB-DOMAIN HERE (river_corridor)
     ############################################################
     <ParameterList name="SUBDOMAIN_NAME domain">
       <ParameterList name="region: all">
@@ -89,12 +89,26 @@
     ADD NEW SUB-MESH REGION HERE (like surface above but for the river corridor)
     (Note: River corridor cells are labeled 10000 in the mesh file)
     ############################################################
+    <ParameterList name="SUBDOMAIN_NAME" type="ParameterList">
+      <ParameterList name="region: labeled set" type="ParameterList">
+        <Parameter name="label" type="string" value="10000" />
+        <Parameter name="file" type="string" value="../../data/synthetic_catchment.exo" />
+        <Parameter name="format" type="string" value="Exodus II" />
+        <Parameter name="entity" type="string" value="face" />
+      </ParameterList>
+    </ParameterList>
     -->    
     <!-- 
     ############################################################
-    ADD A TRACER INJECTION REGION HERE 
+    ADD A TRACER INJECTION REGION HERE (tracer_injection)
     where we inject tracer into the river corridor
     ############################################################
+    <ParameterList name="***NAME_REGION***" type="ParameterList">
+      <ParameterList name="region: box" type="ParameterList">
+        <Parameter name="low coordinate" type="Array(double)" value="{98.0, 240.0}" />
+        <Parameter name="high coordinate" type="Array(double)" value="{102.0,255.0}" />
+      </ParameterList>
+    </ParameterList>    
     -->
   </ParameterList>
 
@@ -265,7 +279,7 @@
 
     <!--  
     ############################################################
-    NEW TRANSPORT PK FOR THE SUB-DOMAIN (river_corridor)
+    NEW TRANSPORT PK FOR THE SUB-DOMAIN (river_corridor but on surface)
     ############################################################
     -->
   </ParameterList>

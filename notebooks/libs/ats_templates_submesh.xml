@@ -1,3 +1,31 @@
+<!-- PK TREE FOR SUBMESH TRANSPORT -->
+<ParameterList name="PK tree">
+  <ParameterList name="flow and transport">
+    <Parameter name="PK type" type="string" value="subcycling MPC" />
+    <ParameterList name="flow coupler">
+      <Parameter name="PK type" type="string" value="coupled water" />
+      <ParameterList name="flow">
+        <Parameter name="PK type" type="string" value="richards flow" />
+      </ParameterList>
+      <ParameterList name="overland flow">
+        <Parameter name="PK type" type="string" value="overland flow, pressure basis" />
+      </ParameterList>
+    </ParameterList>
+    <ParameterList name="surface transport" type="ParameterList">
+      <Parameter name="PK type" type="string" value="transport ATS" />
+    </ParameterList>
+  </ParameterList>
+</ParameterList>
+
+
+<!-- MPC:: flow and transport -->
+<ParameterList name="***MPC NAME***">
+  <Parameter name="PK type" type="string" value="***TYPE***" />
+  <Parameter name="PKs order" type="Array(string)" value="***{PK1, PK2}***" />
+  <Parameter name="subcycle" type="Array(int)" value="***{0,1}***" />
+</ParameterList>
+
+<!-- DEFINE PK:: SURFACE TRANSPORT (river_corridor) -->
 <ParameterList name="***TRANSPORT PK NAME***">
   <Parameter name="PK type" type="string" value="transport ATS" />
   <Parameter name="domain name" type="string" value="***DOMAIN***" />
@@ -10,7 +38,7 @@
   <Parameter name="number of liquid components" type="int" value="1" />
   <Parameter name="component molar masses" type="Array(double)" value="{ 1}" />
   <Parameter name="spatial discretization order" type="int" value="1" />
-  <Parameter name="temporal discretization order" type="int" value="1" />
+  <Parameter name="temporal discretization order" type="int" value="2" />
   <Parameter name="cfl" type="double" value=" 1" />
   <Parameter name="water tolerance" type="double" value="0.001" />
   <Parameter name="transport subcycling" type="bool" value="false" />
@@ -82,4 +110,23 @@
       </ParameterList>
     </ParameterList>
   </ParameterList>
+</ParameterList>
+
+
+<!--       EXTRACT VARIABLES FROM SURFACE TO SUB-DOMAIN: -->
+<ParameterList name="river_corridor-ponded_depth">
+  <Parameter name="evaluator type" type="string" value="extraction evaluator" />
+  <Parameter name="parent domain name" type="string" value="surface" />
+</ParameterList>
+<ParameterList name="river_corridor-water_flux">
+  <Parameter name="evaluator type" type="string" value="extraction evaluator" />
+  <Parameter name="parent domain name" type="string" value="surface" />
+</ParameterList>
+<ParameterList name="river_corridor-molar_density_liquid">
+  <Parameter name="evaluator type" type="string" value="extraction evaluator" />
+  <Parameter name="parent domain name" type="string" value="surface" />
+</ParameterList>
+<ParameterList name="river_corridor-porosity">
+  <Parameter name="evaluator type" type="string" value="extraction evaluator" />
+  <Parameter name="parent domain name" type="string" value="surface" />
 </ParameterList>

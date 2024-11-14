@@ -102,15 +102,13 @@
       </ParameterList>
     </ParameterList>
   </ParameterList>
+
   <ParameterList name="PKs">
 
     <ParameterList name="flow and transport">
       <Parameter name="PK type" type="string" value="subcycling MPC" />
       <Parameter name="PKs order" type="Array(string)" value="{flow coupler, surface transport}" />
       <Parameter name="subcycle" type="Array(int)" value="{0,1}" />
-      <ParameterList name="verbose object" type="ParameterList">
-        <Parameter name="verbosity level" type="string" value="low" />
-      </ParameterList>
     </ParameterList>
 
     <ParameterList name="flow coupler">
@@ -248,7 +246,6 @@
       <Parameter name="component names" type="Array(string)" value="{Tracer1}" />
       <Parameter name="number of liquid components" type="int" value="1" />
       <Parameter name="component molar masses" type="Array(double)" value="{1}" />
-      <Parameter name="component max concentrations" type="Array(double)" value="{1e6}" />      
       <Parameter name="spatial discretization order" type="int" value="1" />
       <Parameter name="temporal discretization order" type="int" value="2" />
       <Parameter name="cfl" type="double" value=" 1" />
@@ -465,6 +462,7 @@
       </ParameterList>
     </ParameterList>
   </ParameterList>
+  
   <ParameterList name="visualization">
     <ParameterList name="domain">
       <Parameter name="times start period stop" type="Array(double)" value="{ 0,1800,-1}" />

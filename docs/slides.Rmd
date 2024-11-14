@@ -387,7 +387,7 @@ ggplot(data, aes(x = time, y = rainfall_rate)) +
           <Parameter name="component" type="string" value="cell" />
 *         <ParameterList name="function">
 *           <ParameterList name="function-tabular">
-*             <Parameter name="x values" type="Array(double)" value="{0, 86400}" />
+*             <Parameter name="x values" type="Array(double)" value="{0, 57600}" />
 *             <Parameter name="y values" type="Array(double)" value="{5e-06, 0}" />
 *             <Parameter name="forms" type="Array(string)" value="{constant}" />
 *           </ParameterList>
@@ -406,8 +406,9 @@ ggplot(data, aes(x = time, y = rainfall_rate)) +
 #### .blockquote[Initial conditions .gray[(true)]]
 .small[
 - located inside each PK in the `xml` file
-- created from functions
-- loaded from files (e.g. checkpoints)
+- can be:
+  - created from functions
+  - loaded from files (e.g. checkpoints)
 ]
 
 #### .blockquote[Boundary conditions]
@@ -446,7 +447,7 @@ ggplot(data, aes(x = time, y = rainfall_rate)) +
 ]]
 
 
-.footnote[See the documentation for details about ICs and BCs: [`https://amanzi.github.io/ats/stable/input_spec/common.html`](https://amanzi.github.io/ats/stable/input_spec/common.html)]
+.footnote[`See the documentation for details about ICs and BCs:` [`https://amanzi.github.io/ats/stable/input_spec/common.html`](https://amanzi.github.io/ats/stable/input_spec/common.html)]
 
 
 ---
@@ -495,6 +496,12 @@ Let's construct the **dependency graph** (or `PK tree`) for the integrated trans
 
 <iframe src="imgs/dependency.html" width="1200" height="600" frameborder="0"></iframe>
 
+
+.footnote[
+  <a href="imgs/dependency_transport.html" target="_blank">```graph: transport```</a> &nbsp; &nbsp; &nbsp; &nbsp;
+  <a href="imgs/dependency_transport_reactive.html" target="_blank">```graph: reactive transport```</a> &nbsp; &nbsp; &nbsp; &nbsp;
+  <a href="imgs/dependency_transport_reactive_ecohydrology.html" target="_blank">```graph: reactive transport & ecohydrology```</a>
+]
 ---
 
 # Transport Model Parameters
